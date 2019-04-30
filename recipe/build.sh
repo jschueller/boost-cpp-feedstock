@@ -22,9 +22,12 @@ elif [ "$(uname)" == "Linux" ]; then
     TOOLSET=gcc
 fi
 
+# https://github.com/boostorg/build/issues/430
+CXX_VERSION=`${CXX} -dumpversion`
+
 # http://www.boost.org/build/doc/html/bbv2/tasks/crosscompile.html
 cat <<EOF > ${SRC_DIR}/tools/build/src/site-config.jam
-using ${TOOLSET} : custom : ${CXX} ;
+using ${TOOLSET} : ${CXX_VERSION} : ${CXX} ;
 EOF
 
 LINKFLAGS="${LINKFLAGS} -L${LIBRARY_PATH}"
